@@ -33,3 +33,10 @@
 /.idea/commandlinetools/Symfony_11_8_24__12_58_AM.xml
 /.idea/vcs.xml
 /.idea/commandlinetools/Symfony_11_17_24__2_14_PM.xml
+
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###
