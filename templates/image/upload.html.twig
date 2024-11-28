@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Upload Image{% endblock %}
+
+{% block body %}
+    <div class="max-w-xl mx-auto mt-8 bg-white shadow-lg rounded-lg p-6">
+        <h1 class="text-2xl font-bold mb-6 text-gray-800 text-center">Upload File</h1>
+
+        {{ form_start(form) }}
+
+        <!-- Filename Field -->
+        <div class="mb-4">
+            {{ form_label(form.filename, 'Filename', {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+            {{ form_widget(form.filename, {'attr': {'class': 'block w-full mt-1'}}) }}
+            {{ form_errors(form.filename) }}
+        </div>
+
+        <!-- Album Dropdown -->
+        <div class="mb-4">
+            {{ form_label(form.album, 'Album', {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+            {{ form_widget(form.album, {'attr': {'class': 'block w-full mt-1'}}) }}
+            {{ form_errors(form.album) }}
+        </div>
+
+        <!-- Submit Button -->
+        <div class="mt-6">
+            {{ form_widget(form.submit) }}
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
