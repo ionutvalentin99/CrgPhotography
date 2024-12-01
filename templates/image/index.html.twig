@@ -3,18 +3,7 @@
 {% block title %}Hello ImageController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <img src="{{ asset(imagePath) }}" alt="Example Image" class="w-48 h-auto rounded">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Proiecte/CrgPhotography/src/Controller/ImageController.php</code></li>
-        <li>Your template at <code>C:/Proiecte/CrgPhotography/templates/image/index.html.twig</code></li>
-    </ul>
-</div>
 {% endblock %}

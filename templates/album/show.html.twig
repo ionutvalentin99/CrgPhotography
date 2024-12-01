@@ -2,4 +2,57 @@
 
 {% block body %}
 
+    <div class="grid grid-cols-3 gap-3 p-4 max-w-screen-xl mx-auto">
+        {% for image in images %}
+            <div class="relative group aspect-w-2 aspect-h-3">
+                <!-- Thumbnail Image -->
+                <img
+                        src="{{ image }}"
+                        alt="Image"
+                        class="w-full h-full object-cover rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                        onclick="viewImage('{{ image }}')"
+                />
+
+                <!-- View Button -->
+                <div
+                        class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-80 transition-opacity duration-300 bg-opacity-40 rounded-lg">
+                    <button
+                            onclick="viewImage('{{ image }}')"
+                            class="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        View
+                    </button>
+                </div>
+            </div>
+        {% else %}
+            <p class="col-span-full text-center text-gray-500">No images to display.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Fullscreen Modal -->
+    <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-80 hidden z-50 flex items-center justify-center">
+        <div class="relative">
+            <img id="modalImage" src="" alt="Expanded Image" class="max-w-full max-h-screen rounded-lg shadow-lg">
+            <button
+                    onclick="closeModal()"
+                    class="absolute top-4 right-4 bg-red-600 text-white p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-red-400 hover:bg-red-700">
+                ✕
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function viewImage(imageUrl) {
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+
+            modalImage.src = imageUrl;
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.add('hidden');
+        }
+    </script>
+
 {% endblock %}
