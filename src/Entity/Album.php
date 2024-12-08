@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\AlbumRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AlbumRepository::class)]
@@ -24,11 +25,14 @@ class Album
     /**
      * @var Collection<int, Image>
      */
-    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'album')]
+    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'album', fetch: "EAGER")]
     private Collection $images;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTime $updatedAt = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $shoot_date = null;
 
     public function __construct()
     {
@@ -102,6 +106,18 @@ class Album
     public function setUpdatedAt(?\DateTime $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getShootDate(): ?\DateTimeInterface
+    {
+        return $this->shoot_date;
+    }
+
+    public function setShootDate(?\DateTimeInterface $shoot_date): static
+    {
+        $this->shoot_date = $shoot_date;
 
         return $this;
     }

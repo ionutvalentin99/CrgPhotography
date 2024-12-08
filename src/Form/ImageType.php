@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Album;
 use App\Entity\Image;
+use App\Repository\AlbumRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -31,8 +32,14 @@ class ImageType extends AbstractType
             ])
             ->add('album', EntityType::class, [
                 'class' => Album::class,
-                'choice_label' => 'title',
+                'choice_label' => function ($album) {
+                    return sprintf('%s - %s', $album->getTitle(), $album->getShootDate()->format('d.m.Y'));
+                },
                 'label' => 'Select Album',
+                'query_builder' => function (AlbumRepository $repository) {
+                    return $repository->createQueryBuilder('a')
+                        ->orderBy('a.shoot_date', 'DESC'); // Adjust 'title' and 'ASC' as needed
+                },
                 'attr' => [
                     'class' => 'block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500', // Dropdown styling
                 ],
