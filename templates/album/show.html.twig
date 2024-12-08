@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+    {% block title %}IC Photography | {{ album.title }}{% endblock %}
+
 {% block body %}
 
     <div class="grid grid-cols-3 gap-3 p-4 max-w-screen-xl mx-auto">
@@ -34,8 +36,8 @@
             <img id="modalImage" src="" alt="Expanded Image" class="max-w-full max-h-screen rounded-lg shadow-lg">
             <button
                     onclick="closeModal()"
-                    class="absolute top-4 right-4 bg-red-600 text-white p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-red-400 hover:bg-red-700">
-                ✕
+                    class="absolute top-4 right-4 text-white p-2">
+                Close
             </button>
         </div>
     </div>

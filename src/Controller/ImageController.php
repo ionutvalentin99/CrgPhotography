@@ -27,7 +27,6 @@ class ImageController extends AbstractController
             if ($uploadedFile) {
                 $uploadsDirectory = $this->getParameter('kernel.project_dir') . '/public/assets/images';
                 $newFilename = uniqid() . '.' . $uploadedFile->guessExtension();
-
                 $uploadedFile->move($uploadsDirectory, $newFilename);
 
                 $image->setFilename($uploadedFile->getClientOriginalName());

@@ -2,7 +2,7 @@
 <html lang="en" class="">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}IC Photography{% endblock %}</title>
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
@@ -20,8 +20,9 @@
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
-    <body>
+    <body class="flex flex-col min-h-screen">
     {% include "components/_navbar.html.twig" %}
         {% block body %}{% endblock %}
+    {% include "components/_footer.html.twig" %}
     </body>
 </html>

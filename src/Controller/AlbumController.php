@@ -18,24 +18,27 @@ class AlbumController extends AbstractController
     public function index(AlbumRepository $repository): Response
     {
         return $this->render('album/index.html.twig', [
-            'albums' => $repository->findAll(),
+            'albums' => $repository->getAlbumsDesc(),
         ]);
     }
 
     #[Route('/album/{id}', name: 'app_album_show')]
     public function show($id, AlbumRepository $repository): Response
     {
-        $imagePath = [];
+        $imagesPaths = [];
         $album = $repository->find($id);
+        if (!$album) {
+            throw $this->createNotFoundException('Album with id ' . $id . ' cannot be found');
+        }
         $images = $album->getImages()->toArray();
 
         foreach ($images as $image) {
-            $imagePath[] = $image->getPath();
+            $imagesPaths[] = $image->getPath();
         }
 
         return $this->render('album/show.html.twig', [
             'album' => $album,
-            'images' => $imagePath,
+            'images' => $imagesPaths,
         ]);
     }
 
