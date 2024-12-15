@@ -3,14 +3,13 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <section class="dark:bg-gray-800 my-24">
-        <div class="flex flex-col items-center justify-top px-6 py-8 mx-auto md:h-screen lg:py-0">
-            <div class="ring ring-blue-300 w-full bg-white rounded-lg shadow dark:border sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-                <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                    {{ form(form) }}
-                </div>
-            </div>
+    <div class="flex items-center justify-center">
+        <div class="rounded-lg shadow-lg p-8 max-w-md w-full bg-white">
+            <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Create an Account</h2>
+            {{ form(form) }}
+            <p class="text-center text-gray-600 mt-4">Already have an account? <a href="{{ path('app_login') }}" class="text-blue-500 font-semibold">Sign In</a></p>
         </div>
-    </section>
+    </div>
+
 {% endblock %}
 

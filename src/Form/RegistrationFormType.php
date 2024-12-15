@@ -18,6 +18,29 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('firstname', TextType::class, [
+                'label' => 'First Name',
+                'attr' => [
+                    'class' => 'block w-full shadow-sm border-gray-300 dark:border-transparent dark:text-gray-800 rounded-md border p-2 mt-1 mb-2',
+                    'placeholder' => 'First name...'
+
+                ],
+            ])
+            ->add('lastname', TextType::class, [
+                'label' => 'Last Name',
+                'attr' => [
+                    'class' => 'block w-full shadow-sm border-gray-300 dark:border-transparent dark:text-gray-800 rounded-md border p-2 mt-1 mb-2',
+                    'label' => 'Last Name: ',
+                    'placeholder' => 'Last name...'
+                ],
+            ])
+            ->add('email', EmailType::class, [
+                'label' => 'Email',
+                'attr' => [
+                    'class' => 'block w-full shadow-sm border-gray-300 dark:border-transparent dark:text-gray-800 rounded-md border p-2 mt-1 mb-2',
+                    'placeholder' => 'Email...'
+                ],
+            ])
             ->add('username', TextType::class, [
                 'constraints' => [
                     new NotBlank([
@@ -45,32 +68,8 @@ class RegistrationFormType extends AbstractType
                     new Length([
                         'min' => 6,
                         'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
-                ],
-            ])
-            ->add('firstname', TextType::class, [
-                'label' => 'First Name',
-                'attr' => [
-                    'class' => 'block w-full shadow-sm border-gray-300 dark:border-transparent dark:text-gray-800 rounded-md border p-2 mt-1 mb-2',
-                    'placeholder' => 'First name...'
-
-                ],
-            ])
-            ->add('lastname', TextType::class, [
-                'label' => 'Last Name',
-                'attr' => [
-                    'class' => 'block w-full shadow-sm border-gray-300 dark:border-transparent dark:text-gray-800 rounded-md border p-2 mt-1 mb-2',
-                    'label' => 'Last Name: ',
-                    'placeholder' => 'Last name...'
-                ],
-            ])
-            ->add('email', EmailType::class, [
-                'label' => 'Email',
-                'attr' => [
-                    'class' => 'block w-full shadow-sm border-gray-300 dark:border-transparent dark:text-gray-800 rounded-md border p-2 mt-1 mb-2',
-                    'placeholder' => 'Email...'
                 ],
             ])
             ->add('Register', SubmitType::class, [
