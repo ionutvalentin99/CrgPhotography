@@ -1,55 +1,189 @@
-<section class="w-full px-8 text-gray-700 bg-white">
-    <div class="container flex flex-col flex-wrap items-center justify-between py-5 mx-auto md:flex-row max-w-7xl">
-        <div class="relative flex flex-col md:flex-row">
-            <a href="{{ path('app_home') }}" class="flex items-center mb-5 font-medium text-gray-900 lg:w-auto lg:items-center lg:justify-center md:mb-0">
-                <span class="mx-auto text-xl font-black leading-none text-gray-900 select-none">IC Photography<span class="text-indigo-600"></span></span>
-            </a>
-            <nav class="flex flex-wrap items-center mb-5 text-base md:mb-0 md:pl-8 md:ml-8 md:border-l md:border-gray-200">
-                <a href="{{ path('app_home') }}" class="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900">Home</a>
-                <a href="{{ path('app_album') }}" class="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900">Albums</a>
-                <a href="{{ path('app_contact') }}" class="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900">Contact</a>
-            </nav>
-        </div>
+<!-- component -->
+<body class="bg-blue-500">
+<nav class="relative px-4 py-4 flex justify-between items-center bg-white">
+    <a class="text-xl font-bold leading-none" href="{{ path('app_home') }}">IC Photography</a>
+    <div class="lg:hidden">
+        <button class="navbar-burger flex items-center text-blue-600 p-3">
+            <svg class="block h-4 w-4 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <title>Mobile menu</title>
+                <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+            </svg>
+        </button>
+    </div>
+    <ul class="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6">
+        <li><a class="text-sm font-bold text-gray-400 hover:text-gray-500" href="{{ path('app_home') }}">Home</a></li>
+        <li class="text-gray-300">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill"
+                 viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
+            </svg>
+        </li>
+        <li><a class="text-sm font-bold text-gray-400 hover:text-gray-500" href="{{ path('app_album') }}">Albums</a>
+        </li>
+        <li class="text-gray-300">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill"
+                 viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
+            </svg>
+        </li>
+        <li><a class="text-sm font-bold text-gray-400 hover:text-gray-500" href="{{ path('app_contact') }}">Contact</a>
+        </li>
+    </ul>
 
-        <div class="inline-flex items-center ml-5 space-x-6 lg:justify-end">
-            {% if not app.user %}
-            <a href="{{ path('app_login') }}" class="text-base font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900">
-                Sign in
-            </a>
-            <a href="{{ path('app_register') }}" class="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-white whitespace-no-wrap bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600">
-                Sign up
-            </a>
-            {% else %}
-                <div class="flex justify-center items-center">
-                    <div class="relative inline-block text-left">
-                        <!-- Button -->
-                        <button id="dropdownUserAvatarButton" type="button"
-                                class="relative inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white transition-all duration-200 bg-gray-900 rounded-lg"
-                                aria-expanded="false" aria-haspopup="true">
-                            {{ app.user.username }}
-                            <!-- Dropdown Icon -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-2" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 011.08 1.04l-4.25 4.25a.75.75 0 01-1.08 0L5.25 8.27a.75.75 0 01-.02-1.06z" clip-rule="evenodd"></path>
-                            </svg>
-                        </button>
+    <!-- LOGIN AND SIGNUP -->
 
-                        <!-- Dropdown Menu -->
-                        <div id="dropdownAvatarMenu" class="absolute right-0 z-10 mt-2 w-36 origin-top-right rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden"
-                             role="menu" aria-orientation="vertical" aria-labelledby="dropdownUserAvatarButton">
-                            <div class="py-1" role="none">
-                                <!-- Stylized Sign Out Button -->
-                                <a href="{{ path('app_logout') }}"
-                                   class="block px-4 py-2 text-sm font-semibold text-black rounded-md focus:ring-2 focus:ring-pink-400 focus:outline-none focus:ring-offset-2 transition-all duration-200"
-                                   role="menuitem">Sign out</a>
-                            </div>
-                        </div>
+    {% if not app.user %}
+
+        <a class="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
+           href="{{ path('app_login') }}">Sign In</a>
+        <a class="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200"
+           href="{{ path('app_register') }}">Sign up</a>
+
+    {% else %}
+
+        <div class="hidden lg:flex lg:justify-center lg:items-center">
+            <div class="relative inline-block text-left">
+
+                <button id="dropdownUserAvatarButton" type="button"
+                        class="relative inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white transition-all duration-200 bg-gray-900 rounded-lg"
+                        aria-expanded="false" aria-haspopup="true">
+                    {{ app.user.username }}
+                    <!-- Dropdown Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-2" viewBox="0 0 20 20" fill="currentColor"
+                         aria-hidden="true">
+                        <path fill-rule="evenodd"
+                              d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 011.08 1.04l-4.25 4.25a.75.75 0 01-1.08 0L5.25 8.27a.75.75 0 01-.02-1.06z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+
+                <!-- Dropdown Menu -->
+                <div id="dropdownAvatarMenu"
+                     class="absolute right-0 z-10 mt-2 w-36 origin-top-right rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden"
+                     role="menu" aria-orientation="vertical" aria-labelledby="dropdownUserAvatarButton">
+                    <div class="py-1" role="none">
+                        <!-- Stylized Sign Out Button -->
+                        <a href="{{ path('app_logout') }}"
+                           class="block px-4 py-2 text-sm font-semibold text-black rounded-md focus:ring-2 focus:ring-pink-400 focus:outline-none focus:ring-offset-2 transition-all duration-200"
+                           role="menuitem">Sign out</a>
                     </div>
                 </div>
-            {% endif %}
+            </div>
         </div>
-    </div>
-</section>
+
+    {% endif %}
+
+    <!-- END LOGIN AND SIGNUP -->
+
+</nav>
+<div class="navbar-menu relative z-50 hidden">
+    <div class="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"></div>
+    <nav class="fixed top-0 right-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-white border-r overflow-y-auto">
+        <div class="flex items-center mb-4">
+            <a class="mr-auto text-sm font-bold leading-none" href="{{ path('app_home') }}">IC Photography
+            </a>
+            <button class="navbar-close">
+                <svg class="h-6 w-6 text-gray-400 cursor-pointer hover:text-gray-500" xmlns="http://www.w3.org/2000/svg"
+                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <div>
+            <ul>
+                <li class="mb-1">
+                    <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
+                       href="{{ path('app_home') }}">Home</a>
+                </li>
+                <li class="mb-1">
+                    <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
+                       href="{{ path('app_album') }}">Albums</a>
+                </li>
+                <li class="mb-1">
+                    <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
+                       href="{{ path('app_contact') }}">Contact</a>
+                </li>
+            </ul>
+        </div>
+
+        {% if not app.user %}
+
+            <div class="mt-auto">
+                <div class="pt-6">
+                    <a class="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl"
+                       href="{{ path('app_login') }}">Sign In</a>
+                    <a class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl"
+                       href="{{ path('app_register') }}">Sign Up</a>
+                </div>
+                <p class="my-4 text-xs text-center text-gray-400">
+                    <span>© {{ "now"|date("Y") }} IC Photography.</span>
+                </p>
+            </div>
+
+        {% else %}
+
+            <div class="mt-auto">
+
+                <div class="pt-6 text-center">
+                    <span class="text-sm">You are logged in as <strong>{{ app.user.username }}</strong></span>
+                    <a class="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl"
+                       href="{{ path('app_logout') }}">Sign Out</a>
+                </div>
+                <p class="my-4 text-xs text-center text-gray-400">
+                    <span>© {{ "now"|date("Y") }} IC Photography.</span>
+                </p>
+            </div>
+
+        {% endif %}
+    </nav>
+</div>
+</body>
+
 <script>
+    // Burger menus
+    document.addEventListener('DOMContentLoaded', function () {
+        // open
+        const burger = document.querySelectorAll('.navbar-burger');
+        const menu = document.querySelectorAll('.navbar-menu');
+
+        if (burger.length && menu.length) {
+            for (var i = 0; i < burger.length; i++) {
+                burger[i].addEventListener('click', function () {
+                    for (var j = 0; j < menu.length; j++) {
+                        menu[j].classList.toggle('hidden');
+                    }
+                });
+            }
+        }
+
+        // close
+        const close = document.querySelectorAll('.navbar-close');
+        const backdrop = document.querySelectorAll('.navbar-backdrop');
+
+        if (close.length) {
+            for (var i = 0; i < close.length; i++) {
+                close[i].addEventListener('click', function () {
+                    for (var j = 0; j < menu.length; j++) {
+                        menu[j].classList.toggle('hidden');
+                    }
+                });
+            }
+        }
+
+        if (backdrop.length) {
+            for (var i = 0; i < backdrop.length; i++) {
+                backdrop[i].addEventListener('click', function () {
+                    for (var j = 0; j < menu.length; j++) {
+                        menu[j].classList.toggle('hidden');
+                    }
+                });
+            }
+        }
+    });
+
     document.addEventListener('DOMContentLoaded', () => {
         const button = document.getElementById('dropdownUserAvatarButton');
         const dropdownMenu = document.getElementById('dropdownAvatarMenu');
@@ -66,4 +200,3 @@
         });
     });
 </script>
-
