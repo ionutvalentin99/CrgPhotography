@@ -34,6 +34,9 @@ class Album
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $shoot_date = null;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Image $thumbnail = null;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -118,6 +121,18 @@ class Album
     public function setShootDate(?\DateTimeInterface $shoot_date): static
     {
         $this->shoot_date = $shoot_date;
+
+        return $this;
+    }
+
+    public function getThumbnail(): ?Image
+    {
+        return $this->thumbnail;
+    }
+
+    public function setThumbnail(?Image $thumbnail): static
+    {
+        $this->thumbnail = $thumbnail;
 
         return $this;
     }

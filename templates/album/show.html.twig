@@ -9,25 +9,52 @@
             <div class="relative group aspect-w-2 aspect-h-3">
                 <!-- Thumbnail Image -->
                 <img
-                        src="{{ image }}"
+                        src="{{ image.getPath() }}"
                         alt="Image"
                         class="w-full h-full object-cover rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                        onclick="viewImage('{{ image }}')"
+                        onclick="viewImage('{{ image.getPath() }}')"
                 />
 
                 <!-- View Button -->
                 <div
                         class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-80 transition-opacity duration-300 bg-opacity-40 rounded-lg">
                     <button
-                            onclick="viewImage('{{ image }}')"
+                            onclick="viewImage('{{ image.getPath() }}')"
                             class="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">
                         View
                     </button>
                 </div>
+
+                {% if is_granted("ROLE_ADMIN") %}
+                    <!-- Three-Dots Dropdown Button -->
+                    <div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="relative group">
+                            <button
+                                    class="p-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 focus:outline-none">
+                                &#x22EE;
+                            </button>
+
+                            <!-- Dropdown options -->
+                            <div
+                                    class="absolute right-0 mt-2 w-auto bg-white rounded-md shadow-lg z-50 opacity-0 transition-opacity duration-200 invisible group-focus-within:visible group-focus-within:opacity-100">
+                                <a
+                                        href="{{ path('app_image_thumbnail', { id: image.id }) }}"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 whitespace-nowrap">
+                                    Set as cover photo
+                                </a>
+                                <a
+                                        href="{{ path('app_image_delete', { id: image.id }) }}"
+                                        onclick="return confirm('Are you sure you want to delete this image?')"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    Delete
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
-        {% else %}
-            <p class="col-span-full text-center text-gray-500">No images to display.</p>
         {% endfor %}
+
     </div>
 
     <!-- Fullscreen Modal -->

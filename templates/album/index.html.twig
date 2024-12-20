@@ -17,7 +17,7 @@
                     <!-- Thumbnail Image -->
                     <div class="relative">
                         <img
-                                src="{{ thumbnailImage.path }}"
+                                src="{{ album.getThumbnail().path }}"
                                 alt="Image"
                                 class="w-full h-64 object-cover rounded-t-lg"
                                 onclick="window.location.href='{{ path('app_album_show', { id: album.id }) }}'"
