@@ -25,20 +25,15 @@ class AlbumController extends AbstractController
     #[Route('/album/{id}', name: 'app_album_show')]
     public function show(int $id, AlbumRepository $repository): Response
     {
-        $imagesPaths = [];
         $album = $repository->find($id);
         if (!$album) {
             throw $this->createNotFoundException('Album with id ' . $id . ' cannot be found');
         }
         $images = $album->getImages()->toArray();
 
-        foreach ($images as $image) {
-            $imagesPaths[] = $image->getPath();
-        }
-
         return $this->render('album/show.html.twig', [
             'album' => $album,
-            'images' => $imagesPaths,
+            'images' => $images,
         ]);
     }
 

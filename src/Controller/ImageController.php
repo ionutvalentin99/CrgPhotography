@@ -4,8 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Image;
 use App\Form\ImageType;
-use App\Repository\ImageRepository;
-use DateTime;
+use App\Service\ImageService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class ImageController extends AbstractController
 {
     #[Route('/image/upload', name: 'app_image_upload')]
-    public function uploadImage(Request $request, EntityManagerInterface $em): Response
+    public function upload(Request $request, EntityManagerInterface $em, ImageService $uploadService): Response
     {
         $image = new Image();
         $form = $this->createForm(ImageType::class, $image);
@@ -23,16 +22,7 @@ class ImageController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $uploadedFile = $form['image']->getData();
-
-            if ($uploadedFile) {
-                $uploadsDirectory = $this->getParameter('kernel.project_dir') . '/public/assets/images';
-                $newFilename = uniqid() . '.' . $uploadedFile->guessExtension();
-                $uploadedFile->move($uploadsDirectory, $newFilename);
-
-                $image->setFilename($uploadedFile->getClientOriginalName());
-                $image->setPath('/assets/images/' . $newFilename);
-                $image->setUploadedAt(new DateTime('now'));
-            }
+            $uploadService->upload($uploadedFile, $image);
 
             $em->persist($image);
             $em->flush();
@@ -47,14 +37,22 @@ class ImageController extends AbstractController
         ]);
     }
 
-    #[Route('/image/{id}', name: 'app_image_show', methods: ['GET'])]
-    public function show($id, ImageRepository $repository): Response
+    #[Route('/image/{id}/delete', name: 'app_image_delete')]
+    public function delete(int $id, EntityManagerInterface $em): Response
     {
-        $image = $repository->find($id);
-        $imagePath = $image->getPath();
+        $image = $em->getRepository(Image::class)->find($id);
+        if (!$image) {
+            throw $this->createNotFoundException('Image with id ' . $id . ' cannot be found');
+        }
 
-        return $this->render('image/index.html.twig', [
-            'imagePath' => $imagePath,
-        ]);
+        $path = $this->getParameter('kernel.project_dir') . '/public' . $image->getPath();
+        if (file_exists($path)) {
+            unlink($path);
+        }
+
+        $em->remove($image);
+        $em->flush();
+
+        return $this->redirectToRoute('app_album_show', ['id' => $image->getAlbum()->getId()]);
     }
 }
