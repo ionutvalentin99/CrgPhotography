@@ -23,6 +23,10 @@ class ImageService
             $newFilename = uniqid() . '.' . $uploadedFile->guessExtension();
             $uploadedFile->move($uploadsDirectory, $newFilename);
 
+            if ($image->getAlbum()->getThumbnail() === null) {
+                $image->getAlbum()->setThumbnail($image);
+            }
+
             $image->setFilename($uploadedFile->getClientOriginalName());
             $image->setPath('/assets/images/' . $newFilename);
             $image->setUploadedAt(new DateTime('now'));

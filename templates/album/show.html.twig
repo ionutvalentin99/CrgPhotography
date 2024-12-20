@@ -33,11 +33,12 @@
                                     class="p-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 focus:outline-none">
                                 &#x22EE;
                             </button>
+
                             <!-- Dropdown options -->
                             <div
                                     class="absolute right-0 mt-2 w-auto bg-white rounded-md shadow-lg z-50 opacity-0 transition-opacity duration-200 invisible group-focus-within:visible group-focus-within:opacity-100">
                                 <a
-                                        href="#"
+                                        href="{{ path('app_image_thumbnail', { id: image.id }) }}"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 whitespace-nowrap">
                                     Set as cover photo
                                 </a>
