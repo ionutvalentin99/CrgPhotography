@@ -20,9 +20,21 @@
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
+
     <body class="flex flex-col min-h-screen">
     {% include "components/_navbar.html.twig" %}
-        {% block body %}{% endblock %}
+
+    {% for message in app.flashes('success') %}
+        <div class="text-center mt-8 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-500">{{ message }}</div>
+    {% endfor %}
+
+    {% for message in app.flashes('danger') %}
+        <div class="text-center mt-8 text-red-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-red-500">{{ message }}</div>
+    {% endfor %}
+
+        {% block body %}
+        {% endblock %}
+
     {% include "components/_footer.html.twig" %}
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
     </body>
