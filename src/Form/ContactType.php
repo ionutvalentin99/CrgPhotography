@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ContactType extends AbstractType
 {
@@ -36,6 +38,11 @@ class ContactType extends AbstractType
                     'placeholder' => 'example@example.com',
                     'required' => true
                 ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please enter an email address'
+                    ])
+                ],
                 'data' => $user ? $user->getEmail() : '',
             ])
             ->add('subject', TextType::class, [
@@ -44,6 +51,13 @@ class ContactType extends AbstractType
                     'class' => "w-full rounded-md py-2.5 px-4 border text-sm outline-[#007bff]",
                     'placeholder' => 'Subject',
                     'required' => true
+                ],
+                'constraints' => [
+                    new NotBlank(),
+                    new Length([
+                        'min' => 3,
+                        'minMessage' => 'Your subject should be at least {{ limit }} characters.',
+                    ])
                 ]
             ])
             ->add('message', TextareaType::class, [
@@ -53,6 +67,15 @@ class ContactType extends AbstractType
                     'placeholder' => 'Your message...',
                     'required' => true,
                     'rows' => 5,
+                ],
+                'constraints' => [
+                    new NotBlank(),
+                    new Length([
+                        'min' => 5,
+                        'max' => 1000,
+                        'minMessage' => 'Your message is less than {{ limit }} characters',
+                        'maxMessage' => 'Your message is bigger than {{ limit }} characters',
+                    ])
                 ]
             ])
             ->add('send', SubmitType::class, [
@@ -60,8 +83,7 @@ class ContactType extends AbstractType
                 'attr' => [
                     'class' => "text-white bg-[#007bff] hover:bg-blue-600 font-semibold rounded-md text-sm px-4 py-2.5 w-full"
                 ]
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

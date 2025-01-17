@@ -31,6 +31,7 @@ class ContactController extends AbstractController
             $message->setEmail($contact->getEmail());
             $message->setSubject($contact->getSubject());
             $message->setMessage($contact->getMessage());
+            $message->setStatus('pending');
 
             $entityManager->persist($contact);
             $entityManager->flush();
