@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}IC Photography | Contact Messages{% endblock %}
+
+{% block body %}
+
+    {% if messages %}
+        <div class="rounded">
+            <div class="text-red-500 text-center mt-1 mb-2">New Messages:</div>
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table-fixed">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr class="text-center">
+                    <th scope="col" class="px-6 py-3 w-1/6">
+                        Name
+                    </th>
+                    <th scope="col" class="px-6 py-3 w-1/6">
+                        Email
+                    </th>
+                    <th scope="col" class="px-6 py-3 w-1/6">
+                        Subject
+                    </th>
+                    <th scope="col" class="px-6 py-3 w-2/6">
+                        Message
+                    </th>
+                    <th scope="col" class="px-6 py-3 w-2/6">
+                        Created
+                    </th>
+                    <th scope="col" class="px-6 py-3 w-1/6">
+                        Action
+                    </th>
+                </tr>
+                </thead>
+                <tbody class="text-center">
+                {% for message in messages %}
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <td class="px-6 py-4 truncate">
+                            {{ message.name }}
+                        </td>
+                        <td class="px-6 py-4 truncate">
+                            {{ message.email }}
+                        </td>
+                        <td class="px-6 py-4 truncate">
+                            {{ message.subject }}
+                        </td>
+                        <td class="px-6 py-4 break-words">
+                            {{ message.message }}
+                        </td>
+                        <td class="px-6 py-4 break-words">
+                            {{ message.getCreatedAt|date("H:i / d.m.Y") }}
+                        </td>
+                        <td class="px-6 py-4">
+                            <a href="{{ path('app_admin_messages_modify', {id: message.id, action: "done"}) }}"
+                               class="text-green-500 border-2 border-green-600 rounded-lg px-2 py-1 mr-1" onclick="return confirm('Are you sure?')">Done</a>
+                            <a href="{{ path('app_admin_messages_modify', {id: message.id, action: "delete"}) }}"
+                               class="text-red-500 border-2 border-red-600 rounded-lg px-2 py-1 mr-1" onclick="return confirm('Are you sure?')">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="dark:text-white text-green-500 flex justify-center relative top-0">All messages are done.</p>
+    {% endif %}
+
+{% endblock %}
