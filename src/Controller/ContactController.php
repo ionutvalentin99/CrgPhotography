@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Contact;
 use App\Entity\User;
 use App\Form\ContactType;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,14 +27,15 @@ class ContactController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $contact = $form->getData();
-            $message->setName($contact->getName());
-            $message->setEmail($contact->getEmail());
-            $message->setSubject($contact->getSubject());
-            $message->setMessage($contact->getMessage());
+            $data = $form->getData();
+            $message->setName($data->getName());
+            $message->setEmail($data->getEmail());
+            $message->setSubject($data->getSubject());
+            $message->setMessage($data->getMessage());
             $message->setStatus('pending');
+            $message->setCreatedAt(new DateTime('now'));
 
-            $entityManager->persist($contact);
+            $entityManager->persist($message);
             $entityManager->flush();
 
             $this->addFlash('success', 'Message sent successfully!');
