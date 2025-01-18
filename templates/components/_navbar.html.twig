@@ -39,17 +39,44 @@
                           d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
                 </svg>
             </li>
-            <li><a class="text-sm font-bold text-gray-400 hover:text-gray-500" href="{{ path('app_album_create') }}">New Album</a>
-            </li>
-            <li class="text-gray-300">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill"
-                     viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
-                </svg>
-            </li>
-            <li><a class="text-sm font-bold text-gray-400 hover:text-gray-500" href="{{ path('app_image_upload') }}">New Photo</a>
-            </li>
+
+            <div class="hidden lg:flex lg:justify-center lg:items-center">
+                <div class="relative inline-block text-left">
+
+                    <button id="dropdownAdminButton" type="button"
+                            class="text-sm font-bold text-gray-400 hover:text-gray-500 flex items-center"
+                            aria-expanded="false" aria-haspopup="true">
+                        Admin Options
+                        <!-- Dropdown Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-2" viewBox="0 0 20 20"
+                             fill="currentColor"
+                             aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                  d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 011.08 1.04l-4.25 4.25a.75.75 0 01-1.08 0L5.25 8.27a.75.75 0 01-.02-1.06z"
+                                  clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+
+                    <!-- Dropdown Menu -->
+                    <div id="dropdownAdminMenu"
+                         class="absolute right-0 z-10 mt-2 w-36 origin-top-right rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden"
+                         role="menu" aria-orientation="vertical" aria-labelledby="dropdownAdminButton">
+                        <div class="py-1" role="none">
+                            <!-- Stylized Sign Out Button -->
+                            <a href="{{ path('app_album_create') }}"
+                               class="block px-4 py-2 text-sm font-semibold text-gray-400 hover:text-gray-500 rounded-md focus:ring-2 focus:outline-none focus:ring-offset-2 transition-all duration-200"
+                               role="menuitem">New Album</a>
+                            <a href="{{ path('app_image_upload') }}"
+                               class="block px-4 py-2 text-sm font-semibold text-gray-400 hover:text-gray-500 rounded-md focus:ring-2 focus:outline-none focus:ring-offset-2 transition-all duration-200"
+                               role="menuitem">New Image</a>
+                            <a href="{{ path('app_admin_messages') }}"
+                               class="block px-4 py-2 text-sm font-semibold text-gray-400 hover:text-gray-500 rounded-md focus:ring-2 focus:outline-none focus:ring-offset-2 transition-all duration-200"
+                               role="menuitem">Contact Messages</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         {% endif %}
 
     </ul>
@@ -89,7 +116,7 @@
                     <div class="py-1" role="none">
                         <!-- Stylized Sign Out Button -->
                         <a href="{{ path('app_logout') }}"
-                           class="block px-4 py-2 text-sm font-semibold text-black rounded-md focus:ring-2 focus:ring-pink-400 focus:outline-none focus:ring-offset-2 transition-all duration-200"
+                           class="block px-4 py-2 text-sm font-semibold text-black rounded-md focus:ring-2 focus:outline-none focus:ring-offset-2 transition-all duration-200"
                            role="menuitem">Sign out</a>
                     </div>
                 </div>
@@ -131,15 +158,20 @@
                 </li>
 
                 {% if is_granted("ROLE_ADMIN") %}
-                <li class="mb-1">
-                    <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                       href="{{ path('app_album_create') }}">New Album</a>
-                </li>
+                    <li class="mb-1">
+                        <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
+                           href="{{ path('app_album_create') }}">New Album</a>
+                    </li>
 
-                <li class="mb-1">
-                    <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                       href="{{ path('app_image_upload') }}">New Photo</a>
-                </li>
+                    <li class="mb-1">
+                        <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
+                           href="{{ path('app_image_upload') }}">New Photo</a>
+                    </li>
+
+                    <li class="mb-1">
+                        <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
+                           href="{{ path('app_admin_messages') }}">Messages</a>
+                    </li>
                 {% endif %}
 
             </ul>
@@ -223,6 +255,22 @@
     document.addEventListener('DOMContentLoaded', () => {
         const button = document.getElementById('dropdownUserAvatarButton');
         const dropdownMenu = document.getElementById('dropdownAvatarMenu');
+
+        button.addEventListener('click', () => {
+            dropdownMenu.classList.toggle('hidden');
+        });
+
+        // Close the dropdown when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!button.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.add('hidden');
+            }
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const button = document.getElementById('dropdownAdminButton');
+        const dropdownMenu = document.getElementById('dropdownAdminMenu');
 
         button.addEventListener('click', () => {
             dropdownMenu.classList.toggle('hidden');
