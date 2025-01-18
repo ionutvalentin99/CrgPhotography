@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Album;
+use App\Entity\Contact;
 use App\Entity\Image;
 use App\Form\AlbumType;
 use App\Form\ImageType;
@@ -105,5 +106,68 @@ class AdminController extends AbstractController
         $em->flush();
 
         return $this->redirectToRoute('app_album');
+    }
+
+    #[Route('/contact/messages/unsolved', name: 'app_admin_messages_unsolved')]
+    public function unsolvedMessages(EntityManagerInterface $entityManager): Response
+    {
+        $data = $entityManager->getRepository(Contact::class)->getUnresolvedDesc();
+        $messages = [];
+
+        foreach ($data as $item) {
+            $messages[] = $item;
+        }
+
+        return $this->render('contact/unsolvedMessages.html.twig', [
+            'messages' => $messages,
+        ]);
+    }
+
+    #[Route('/contact/messages/solved', name: 'app_admin_messages_solved')]
+    public function solvedMessages(EntityManagerInterface $entityManager): Response
+    {
+        $data = $entityManager->getRepository(Contact::class)->getResolvedDesc();
+        $messages = [];
+
+        foreach ($data as $item) {
+            $messages[] = $item;
+        }
+
+        return $this->render('contact/solvedMessages.html.twig', [
+            'messages' => $messages,
+        ]);
+    }
+
+    #[Route('/contact/messages/{id}/modify', name: 'app_admin_messages_modify')]
+    public function modify($id, EntityManagerInterface $entityManager, Request $request): Response
+    {
+        $message = $entityManager->getRepository(Contact::class)->find($id);
+        if (!$message) {
+            throw $this->createNotFoundException('Message with id ' . $id . ' cannot be found');
+        }
+
+        switch ($request->query->get('action')) {
+            case 'delete': $entityManager->remove($message);
+            break;
+            case 'done': {
+                $message->setStatus('done');
+                $message->setUpdatedAt(new DateTime('now'));
+            }
+            break;
+            case 'undone': {
+                $message->setStatus('pending');
+                $message->setUpdatedAt(new DateTime('now'));
+            }
+            break;
+        }
+
+        $entityManager->flush();
+
+        $previousRoute = $request->headers->get('referer');
+        if ($previousRoute) {
+            return $this->redirect($previousRoute);
+        }
+
+        return $this->redirectToRoute('app_home');
     }
 }

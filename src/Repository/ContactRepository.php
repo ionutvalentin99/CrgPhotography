@@ -16,6 +16,26 @@ class ContactRepository extends ServiceEntityRepository
         parent::__construct($registry, Contact::class);
     }
 
+    public function getUnresolvedDesc(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.status = :val')
+            ->setParameter('val', 'pending')
+            ->orderBy('c.updatedAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getResolvedDesc(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.status = :val')
+            ->setParameter('val', 'done')
+            ->orderBy('c.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Contact[] Returns an array of Contact objects
 //     */

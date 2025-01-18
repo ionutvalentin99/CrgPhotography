@@ -34,6 +34,7 @@ class ContactController extends AbstractController
             $message->setMessage($data->getMessage());
             $message->setStatus('pending');
             $message->setCreatedAt(new DateTime('now'));
+            $message->setUpdatedAt(new DateTime('now'));
 
             $entityManager->persist($message);
             $entityManager->flush();
