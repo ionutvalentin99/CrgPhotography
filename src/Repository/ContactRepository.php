@@ -16,7 +16,7 @@ class ContactRepository extends ServiceEntityRepository
         parent::__construct($registry, Contact::class);
     }
 
-    public function getUnresolvedDesc(): array
+    public function getUnreadDesc(): array
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.status = :val')
@@ -26,7 +26,7 @@ class ContactRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getResolvedDesc(): array
+    public function getReadDesc(): array
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.status = :val')

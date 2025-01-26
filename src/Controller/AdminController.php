@@ -33,7 +33,7 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('app_album_show', ['id' => $album->getId()]);
         }
 
-        return $this->render('album/create.html.twig', [
+        return $this->render('admin/album/create.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -57,7 +57,7 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('app_album_show', ['id' => $image->getAlbum()->getId()]);
         }
 
-        return $this->render('image/upload.html.twig', [
+        return $this->render('admin/image/upload.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -108,37 +108,37 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('app_album');
     }
 
-    #[Route('/contact/messages/unsolved', name: 'app_admin_messages_unsolved')]
-    public function unsolvedMessages(EntityManagerInterface $entityManager): Response
+    #[Route('/messages/unread', name: 'app_admin_messages_unread')]
+    public function unreadMessages(EntityManagerInterface $entityManager): Response
     {
-        $data = $entityManager->getRepository(Contact::class)->getUnresolvedDesc();
+        $data = $entityManager->getRepository(Contact::class)->getUnreadDesc();
         $messages = [];
 
         foreach ($data as $item) {
             $messages[] = $item;
         }
 
-        return $this->render('contact/unsolvedMessages.html.twig', [
+        return $this->render('admin/messages/unread.html.twig', [
             'messages' => $messages,
         ]);
     }
 
-    #[Route('/contact/messages/solved', name: 'app_admin_messages_solved')]
-    public function solvedMessages(EntityManagerInterface $entityManager): Response
+    #[Route('/messages/read', name: 'app_admin_messages_read')]
+    public function readMessages(EntityManagerInterface $entityManager): Response
     {
-        $data = $entityManager->getRepository(Contact::class)->getResolvedDesc();
+        $data = $entityManager->getRepository(Contact::class)->getReadDesc();
         $messages = [];
 
         foreach ($data as $item) {
             $messages[] = $item;
         }
 
-        return $this->render('contact/solvedMessages.html.twig', [
+        return $this->render('admin/messages/read.html.twig', [
             'messages' => $messages,
         ]);
     }
 
-    #[Route('/contact/messages/{id}/modify', name: 'app_admin_messages_modify')]
+    #[Route('/messages/{id}/modify', name: 'app_admin_messages_modify')]
     public function modify($id, EntityManagerInterface $entityManager, Request $request): Response
     {
         $message = $entityManager->getRepository(Contact::class)->find($id);
