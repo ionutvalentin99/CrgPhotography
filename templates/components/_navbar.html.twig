@@ -69,12 +69,12 @@
                                 <a href="{{ path('app_image_upload') }}"
                                    class="block px-4 py-2 text-sm font-semibold text-gray-400 hover:text-gray-500 rounded-md focus:ring-2 focus:outline-none focus:ring-offset-2 transition-all duration-200"
                                    role="menuitem">New Image</a>
-                                <a href="{{ path('app_admin_messages_unsolved') }}"
+                                <a href="{{ path('app_admin_messages_unread') }}"
                                    class="block px-4 py-2 text-sm font-semibold text-gray-400 hover:text-gray-500 rounded-md focus:ring-2 focus:outline-none focus:ring-offset-2 transition-all duration-200"
-                                   role="menuitem">New Messages</a>
-                                <a href="{{ path('app_admin_messages_solved') }}"
+                                   role="menuitem">Unread Messages</a>
+                                <a href="{{ path('app_admin_messages_read') }}"
                                    class="block px-4 py-2 text-sm font-semibold text-gray-400 hover:text-gray-500 rounded-md focus:ring-2 focus:outline-none focus:ring-offset-2 transition-all duration-200"
-                                   role="menuitem">Done Messages</a>
+                                   role="menuitem">Read Messages</a>
                             </div>
                         </div>
                 </div>
@@ -172,7 +172,11 @@
 
                     <li class="mb-1">
                         <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                           href="{{ path('app_admin_messages_unsolved') }}">New Messages</a>
+                           href="{{ path('app_admin_messages_unread') }}">Unread Messages</a>
+                    </li>
+                    <li class="mb-1">
+                        <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
+                           href="{{ path('app_admin_messages_read') }}">Read Messages</a>
                     </li>
                 {% endif %}
 
