@@ -3,6 +3,9 @@
     {% block title %}IC Photography | {{ album.title }}{% endblock %}
 
 {% block body %}
+    {% if is_granted("ROLE_ADMIN") and album.images.empty %}
+        <div class="text-center text-2xl">It seems this album is empty. Add images <a href="{{ path('app_image_upload') }}" class="text-blue-700">here</a>.</div>
+    {% endif %}
 
     <div class="grid grid-cols-3 gap-3 p-4 max-w-screen-xl mx-auto">
         {% for image in images %}

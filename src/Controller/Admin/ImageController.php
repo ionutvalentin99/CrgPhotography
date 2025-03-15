@@ -42,8 +42,15 @@ class ImageController extends AbstractController
         if (!$image) {
             throw $this->createNotFoundException('Image with id ' . $id . ' cannot be found');
         }
-
+        $album = $image->getAlbum();
         $imageService->delete($image);
+
+        if ($album->getImages()->isEmpty()) {
+            $em->remove($album);
+            $em->flush();
+
+            return $this->redirectToRoute('app_album');
+        }
 
         return $this->redirectToRoute('app_album_show', ['id' => $image->getAlbum()->getId()]);
     }
