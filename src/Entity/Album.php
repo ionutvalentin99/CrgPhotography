@@ -25,7 +25,7 @@ class Album
     /**
      * @var Collection<int, Image>
      */
-    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'album', fetch: "EAGER")]
+    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'album', cascade: ['persist', 'remove'], fetch: "EAGER", orphanRemoval: true)]
     private Collection $images;
 
     #[ORM\Column(nullable: true)]

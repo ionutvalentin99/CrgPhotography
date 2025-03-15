@@ -3,6 +3,9 @@
     {% block title %}IC Photography | {{ album.title }}{% endblock %}
 
 {% block body %}
+    {% if is_granted("ROLE_ADMIN") and album.images.empty %}
+        <div class="text-center text-2xl">It seems this album is empty. Add images <a href="{{ path('app_image_upload') }}" class="text-blue-700">here</a>.</div>
+    {% endif %}
 
     <div class="grid grid-cols-3 gap-3 p-4 max-w-screen-xl mx-auto">
         {% for image in images %}
@@ -61,9 +64,7 @@
     <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-80 hidden z-50 flex items-center justify-center">
         <div class="relative">
             <img id="modalImage" src="" alt="Expanded Image" class="max-w-full max-h-screen rounded-lg shadow-lg">
-            <button
-                    onclick="closeModal()"
-                    class="absolute top-4 right-4 text-white p-2">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-white bg-gray-700 hover:bg-gray-900 px-4 py-2 rounded">
                 Close
             </button>
         </div>
