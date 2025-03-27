@@ -5,7 +5,6 @@ namespace App\Controller\Admin;
 use App\Entity\Album;
 use App\Form\AlbumType;
 use App\Repository\AlbumRepository;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +21,6 @@ class AlbumController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $album->setCreatedAt(new DateTime('now'));
             $em->persist($album);
             $em->flush();
 
@@ -39,7 +37,7 @@ class AlbumController extends AbstractController
     {
         $album = $repository->find($id);
         if (!$album) {
-            throw $this->createNotFoundException("The album with id {$id} does not exist");
+            throw $this->createNotFoundException("The album with id $id does not exist");
         }
 
         $album->setThumbnail(null);

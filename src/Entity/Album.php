@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\AlbumRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -40,6 +41,7 @@ class Album
     public function __construct()
     {
         $this->images = new ArrayCollection();
+        $this->setCreatedAt(new DateTime());
     }
 
     public function getId(): ?int
