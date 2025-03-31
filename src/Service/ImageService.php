@@ -5,15 +5,19 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Entity\Image;
+use App\Repository\ImageRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ImageService
 {
     public function __construct(
         private readonly ParameterBagInterface  $parameterBag,
         private readonly EntityManagerInterface $entityManager,
+        private readonly SluggerInterface       $slugger,
     )
     {
     }
@@ -21,16 +25,23 @@ class ImageService
     public function upload($uploadedFile, Image $image): void
     {
         if ($uploadedFile) {
-            $uploadsDirectory = $this->parameterBag->get('kernel.project_dir') . '/public/assets/images';
-            $newFilename = uniqid() . '.' . $uploadedFile->guessExtension();
-            $uploadedFile->move($uploadsDirectory, $newFilename);
+            $originalFileName = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFileName = $this->slugger->slug($originalFileName);
+            $newFileName = $safeFileName . '-' . uniqid() . '.' . $uploadedFile->guessExtension();
+            $uploadDirectory = $this->parameterBag->get('uploads_directory');
+
+            try {
+                $uploadedFile->move($uploadDirectory, $newFileName);
+            } catch (FileException $e) {
+                echo $e->getMessage();
+            }
 
             if ($image->getAlbum()->getThumbnail() === null) {
                 $image->getAlbum()->setThumbnail($image);
             }
 
-            $image->setFilename($uploadedFile->getClientOriginalName());
-            $image->setPath('/assets/images/' . $newFilename);
+            $image->setFilename($newFileName);
+            $image->setPath('/assets/images/' . $newFileName);
             $image->setUploadedAt(new DateTime('now'));
 
             $this->entityManager->persist($image);

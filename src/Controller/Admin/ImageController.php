@@ -34,7 +34,7 @@ class ImageController extends AbstractController
         ]);
     }
 
-    #[Route('admin/image/{id}/delete', name: 'app_image_delete')]
+    #[Route('admin/image/delete/{id}', name: 'app_image_delete')]
     public function delete(int $id, EntityManagerInterface $em, ImageService $imageService): Response
     {
         $image = $em->getRepository(Image::class)->find($id);
@@ -55,7 +55,7 @@ class ImageController extends AbstractController
         return $this->redirectToRoute('app_album_show', ['id' => $image->getAlbum()->getId()]);
     }
 
-    #[Route('admin/image/{id}/changeThumbnail', name: 'app_image_thumbnail')]
+    #[Route('admin/image/changeThumbnail/{id}', name: 'app_image_thumbnail')]
     public function changeThumbnail(int $id, EntityManagerInterface $em): Response
     {
         $image = $em->getRepository(Image::class)->find($id);
