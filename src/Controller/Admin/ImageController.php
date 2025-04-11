@@ -10,10 +10,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted("ROLE_ADMIN")]
 class ImageController extends AbstractController
 {
-    #[Route('admin/image/upload', name: 'app_image_upload')]
+    #[Route('image/upload', name: 'app_image_upload')]
     public function upload(Request $request, ImageService $imageService): Response
     {
         $image = new Image();
@@ -34,7 +36,7 @@ class ImageController extends AbstractController
         ]);
     }
 
-    #[Route('admin/image/delete/{id}', name: 'app_image_delete')]
+    #[Route('image/delete/{id<\d+>}', name: 'app_image_delete')]
     public function delete(int $id, EntityManagerInterface $em, ImageService $imageService): Response
     {
         $image = $em->getRepository(Image::class)->find($id);
@@ -55,7 +57,7 @@ class ImageController extends AbstractController
         return $this->redirectToRoute('app_album_show', ['id' => $image->getAlbum()->getId()]);
     }
 
-    #[Route('admin/image/changeThumbnail/{id}', name: 'app_image_thumbnail')]
+    #[Route('image/changeThumbnail/{id<\d+>}', name: 'app_image_thumbnail')]
     public function changeThumbnail(int $id, EntityManagerInterface $em): Response
     {
         $image = $em->getRepository(Image::class)->find($id);
