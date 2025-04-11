@@ -17,7 +17,7 @@ class AlbumController extends AbstractController
         ]);
     }
 
-    #[Route('/album/{id}', name: 'app_album_show')]
+    #[Route('/album/{id<\d+>}', name: 'app_album_show')]
     public function show(int $id, AlbumRepository $repository): Response
     {
         $album = $repository->find($id);

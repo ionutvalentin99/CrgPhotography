@@ -9,10 +9,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted("ROLE_ADMIN")]
 class ContactController extends AbstractController
 {
-    #[Route('admin/messages/unread', name: 'app_admin_messages_unread')]
+    #[Route('messages/unread', name: 'app_admin_messages_unread')]
     public function unreadMessages(EntityManagerInterface $entityManager): Response
     {
         $data = $entityManager->getRepository(Contact::class)->getUnreadDesc();
@@ -27,7 +29,7 @@ class ContactController extends AbstractController
         ]);
     }
 
-    #[Route('admin/messages/read', name: 'app_admin_messages_read')]
+    #[Route('messages/read', name: 'app_admin_messages_read')]
     public function readMessages(EntityManagerInterface $entityManager): Response
     {
         $data = $entityManager->getRepository(Contact::class)->getReadDesc();
@@ -42,7 +44,7 @@ class ContactController extends AbstractController
         ]);
     }
 
-    #[Route('admin/messages/{id}/modify', name: 'app_admin_messages_modify')]
+    #[Route('messages/modify/{id<\d+>}', name: 'app_admin_messages_modify')]
     public function modify($id, EntityManagerInterface $entityManager, Request $request, ContactService $contactService): Response
     {
         $message = $entityManager->getRepository(Contact::class)->find($id);

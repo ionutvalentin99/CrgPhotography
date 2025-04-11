@@ -11,10 +11,12 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted("ROLE_ADMIN")]
 class AlbumController extends AbstractController
 {
-    #[Route('/admin/albums/create', name: 'app_album_create')]
+    #[Route('albums/create', name: 'app_album_create')]
     public function create(Request $request, EntityManagerInterface $em): Response
     {
         $album = new Album();
@@ -33,7 +35,7 @@ class AlbumController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/albums/{id}/delete', name: 'app_album_delete')]
+    #[Route('albums/delete/{id<\d+>}', name: 'app_album_delete')]
     public function delete($id, AlbumRepository $repository, EntityManagerInterface $em, ParameterBagInterface $parameterBag): Response
     {
         $album = $repository->find($id);
