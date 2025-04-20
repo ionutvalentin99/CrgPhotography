@@ -17,12 +17,7 @@ class ContactController extends AbstractController
     #[Route('messages/unread', name: 'app_admin_messages_unread')]
     public function unreadMessages(EntityManagerInterface $entityManager): Response
     {
-        $data = $entityManager->getRepository(Contact::class)->getUnreadDesc();
-        $messages = [];
-
-        foreach ($data as $item) {
-            $messages[] = $item;
-        }
+        $messages = $entityManager->getRepository(Contact::class)->getUnreadDesc();
 
         return $this->render('admin/messages/unread.html.twig', [
             'messages' => $messages,
@@ -32,20 +27,15 @@ class ContactController extends AbstractController
     #[Route('messages/read', name: 'app_admin_messages_read')]
     public function readMessages(EntityManagerInterface $entityManager): Response
     {
-        $data = $entityManager->getRepository(Contact::class)->getReadDesc();
-        $messages = [];
-
-        foreach ($data as $item) {
-            $messages[] = $item;
-        }
+        $messages = $entityManager->getRepository(Contact::class)->getReadDesc();
 
         return $this->render('admin/messages/read.html.twig', [
             'messages' => $messages,
         ]);
     }
 
-    #[Route('messages/modify/{id<\d+>}', name: 'app_admin_messages_modify')]
-    public function modify($id, EntityManagerInterface $entityManager, Request $request, ContactService $contactService): Response
+    #[Route('messages/modify/{id}', name: 'app_admin_messages_modify')]
+    public function modify(int $id, EntityManagerInterface $entityManager, Request $request, ContactService $contactService): Response
     {
         $message = $entityManager->getRepository(Contact::class)->find($id);
         if (!$message) {
