@@ -9,14 +9,15 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-class ImageService
+readonly class ImageService
 {
     public function __construct(
-        private readonly ParameterBagInterface  $parameterBag,
-        private readonly EntityManagerInterface $entityManager,
-        private readonly SluggerInterface       $slugger,
+        private ParameterBagInterface  $parameterBag,
+        private EntityManagerInterface $entityManager,
+        private SluggerInterface       $slugger,
     )
     {
     }
@@ -68,5 +69,14 @@ class ImageService
 
         $this->entityManager->remove($image);
         $this->entityManager->flush();
+    }
+
+    public function findImageOr404(int $id): Image
+    {
+        $image = $this->entityManager->getRepository(Image::class)->find($id);
+        if (!$image) {
+            throw new NotFoundHttpException('Image with id ' . $id . ' cannot be found');
+        }
+        return $image;
     }
 }
