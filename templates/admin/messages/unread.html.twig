@@ -9,7 +9,7 @@
             <h2 class="text-xl text-center mt-2 mb-2">Unread Messages</h2>
             <div class="overflow-x-auto">
                 <!-- Responsive Table -->
-                <table class="hidden sm:table w-full text-sm text-left text-gray-500 dark:text-gray-400 border-collapse border border-gray-200 dark:border-gray-700">
+                <table class="hidden sm:table w-full text-sm text-center text-gray-500 dark:text-gray-400 border-collapse border border-gray-200 dark:border-gray-700">
                     <thead class="text-xs text-gray-700 uppercase  dark:bg-gray-700 dark:text-gray-300 border">
                     <tr class="text-center">
                         <th scope="col" class="px-6 py-3">Name</th>
@@ -17,6 +17,7 @@
                         <th scope="col" class="px-6 py-3">Subject</th>
                         <th scope="col" class="px-6 py-3">Message</th>
                         <th scope="col" class="px-6 py-3">Created</th>
+                        <th scope="col" class="px-6 py-3">Updated</th>
                         <th scope="col" class="px-6 py-3">Action</th>
                     </tr>
                     </thead>
@@ -28,6 +29,7 @@
                             <td class="px-6 py-4 truncate font-medium text-gray-800 dark:text-gray-300">{{ message.subject }}</td>
                             <td class="px-6 py-4 break-words text-gray-600 dark:text-gray-400">{{ message.message }}</td>
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ message.getCreatedAt|date("H:i / d.m.Y") }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ message.getUpdatedAt|date("H:i / d.m.Y") }}</td>
                             <td class="px-6 py-4 flex justify-center space-x-2">
                                 <a href="{{ path('app_admin_messages_modify', {id: message.id, action: "done"}) }}"
                                    class="text-white bg-green-600 hover:bg-green-700 border-2 border-green-600 rounded-lg px-3 py-1 text-sm font-medium transition duration-200"
