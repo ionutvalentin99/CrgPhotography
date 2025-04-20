@@ -15,8 +15,15 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted("ROLE_ADMIN")]
 class ImageController extends AbstractController
 {
+    public function __construct(
+        private readonly ImageService           $imageService,
+        private readonly EntityManagerInterface $entityManager,
+    )
+    {
+    }
+
     #[Route('image/upload', name: 'app_image_upload')]
-    public function upload(Request $request, ImageService $imageService): Response
+    public function upload(Request $request): Response
     {
         $image = new Image();
         $form = $this->createForm(ImageType::class, $image);
@@ -24,7 +31,7 @@ class ImageController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $uploadedFile = $form['image']->getData();
-            $imageService->upload($uploadedFile, $image);
+            $this->imageService->upload($uploadedFile, $image);
 
             $this->addFlash('success', 'Image uploaded successfully!');
 
@@ -36,20 +43,16 @@ class ImageController extends AbstractController
         ]);
     }
 
-    #[Route('image/delete/{id<\d+>}', name: 'app_image_delete')]
-    public function delete(int $id, EntityManagerInterface $em, ImageService $imageService): Response
+    #[Route('image/delete/{id}', name: 'app_image_delete')]
+    public function delete(int $id): Response
     {
-        $image = $em->getRepository(Image::class)->find($id);
-
-        if (!$image) {
-            throw $this->createNotFoundException('Image with id ' . $id . ' cannot be found');
-        }
+        $image = $this->imageService->findImageOr404($id);
         $album = $image->getAlbum();
-        $imageService->delete($image);
+        $this->imageService->delete($image);
 
         if ($album->getImages()->isEmpty()) {
-            $em->remove($album);
-            $em->flush();
+            $this->entityManager->remove($album);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('app_album');
         }
@@ -57,18 +60,14 @@ class ImageController extends AbstractController
         return $this->redirectToRoute('app_album_show', ['id' => $image->getAlbum()->getId()]);
     }
 
-    #[Route('image/changeThumbnail/{id<\d+>}', name: 'app_image_thumbnail')]
-    public function changeThumbnail(int $id, EntityManagerInterface $em): Response
+    #[Route('image/changeThumbnail/{id}', name: 'app_image_thumbnail')]
+    public function changeThumbnail(int $id): Response
     {
-        $image = $em->getRepository(Image::class)->find($id);
-        if (!$image) {
-            throw $this->createNotFoundException('Image with id ' . $id . ' cannot be found');
-        }
-
+        $image = $this->imageService->findImageOr404($id);
         $album = $image->getAlbum();
         $album->setThumbnail($image);
 
-        $em->flush();
+        $this->entityManager->flush();
 
         return $this->redirectToRoute('app_album');
     }
