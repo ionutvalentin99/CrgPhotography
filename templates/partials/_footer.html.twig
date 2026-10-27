@@ -18,8 +18,8 @@
             <div class="col-md-4">
                 <span class="footer-label">Contact</span>
                 <div class="d-flex flex-column gap-2">
-                    <a href="mailto:ionut_c1999@yahoo.com">ionut_c1999@yahoo.com</a>
-                    <a href="tel:+40700000000">+40 700 000 000</a>
+                    <a href="mailto:{{ contact_email }}">{{ contact_email }}</a>
+                    <a href="tel:{{ contact_phone|replace({' ': ''}) }}">{{ contact_phone }}</a>
                 </div>
             </div>
         </div>

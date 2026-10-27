@@ -33,6 +33,18 @@ final class PublicPagesTest extends WebTestCase
         self::assertResponseStatusCodeSame(404);
     }
 
+    public function testContactDetailsComeFromConfiguration(): void
+    {
+        $client = static::createClient();
+        $email = static::getContainer()->getParameter('app.contact_email');
+
+        $client->request('GET', '/contact');
+
+        self::assertSelectorExists(sprintf('footer a[href="mailto:%s"]', $email));
+        self::assertSelectorExists(sprintf('main a[href="mailto:%s"]', $email));
+        self::assertSelectorExists('footer a[href="tel:+40700000000"]');
+    }
+
     public function testNavbarHasNoAdminLink(): void
     {
         $client = static::createClient();
