@@ -9,5 +9,6 @@
         <a href="{{ logout_path() }}" class="btn btn-outline-dark">Logout</a>
     </div>
     <p>Welcome, {{ app.user.userIdentifier }}.</p>
+    <a href="{{ path('admin_contact_requests') }}" class="btn btn-dark">Mesaje de contact</a>
 </div>
 {% endblock %}

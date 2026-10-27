@@ -1,0 +1,34 @@
+<nav class="navbar navbar-expand-md fixed-top landing-navbar py-3">
+    <div class="container">
+        <a class="navbar-brand font-display fs-4" href="{{ path('app_home') }}">Crg Photography</a>
+
+        <ul class="navbar-nav d-none d-md-flex flex-row gap-4 mb-0 mx-auto">
+            <li class="nav-item"><a class="nav-link px-0" href="{{ path('app_home') }}">Home</a></li>
+            <li class="nav-item"><a class="nav-link px-0" href="{{ path('app_gallery') }}">Galerie</a></li>
+            <li class="nav-item"><a class="nav-link px-0" href="{{ path('app_contact') }}">Contact</a></li>
+        </ul>
+
+        <div class="d-flex align-items-center gap-3">
+            <a href="{{ path('app_contact') }}" class="btn btn-ink btn-sm d-none d-sm-inline-flex">Programează o ședință</a>
+
+            <button class="navbar-toggler d-md-none border-0 p-0" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#siteMenu" aria-controls="siteMenu" aria-label="Deschide meniul">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="siteMenu" aria-labelledby="siteMenuLabel">
+    <div class="offcanvas-header">
+        <span class="offcanvas-title font-display fs-4" id="siteMenuLabel">Meniu</span>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Închide"></button>
+    </div>
+    <div class="offcanvas-body">
+        <ul class="list-unstyled font-display fs-2 offcanvas-menu">
+            <li class="border-bottom py-3"><a href="{{ path('app_home') }}" data-bs-dismiss="offcanvas">Home</a></li>
+            <li class="border-bottom py-3"><a href="{{ path('app_gallery') }}" data-bs-dismiss="offcanvas">Galerie</a></li>
+            <li class="py-3"><a href="{{ path('app_contact') }}" data-bs-dismiss="offcanvas">Contact</a></li>
+        </ul>
+    </div>
+</div>

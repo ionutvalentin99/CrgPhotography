@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact — Cîrceag Ionuț{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% include 'partials/_fonts.html.twig' %}
+{% endblock %}
+
+{% block body %}
+<div class="landing-page">
+
+    {% include 'partials/_navbar.html.twig' %}
+
+    <main class="section-space" style="padding-top: 7rem;">
+        <div class="container">
+            <div class="row gy-5">
+                <div class="col-lg-6">
+                    <span class="eyebrow-badge mb-3"><span class="dot"></span><span>Hai să vorbim</span></span>
+                    <h1 class="font-display display-4 mt-3 mb-4">Contact</h1>
+                    <p class="mb-5" style="max-width: 48ch; color: var(--stone);">
+                        Spune-mi câteva cuvinte despre ședința pe care o ai în minte și revin cu un răspuns
+                        cât mai curând.
+                    </p>
+
+                    {% for message in app.flashes('success') %}
+                        <div class="alert alert-success" role="alert">{{ message }}</div>
+                    {% endfor %}
+
+                    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                        <div class="mb-4">
+                            {{ form_label(form.name) }}
+                            {{ form_widget(form.name) }}
+                            {{ form_errors(form.name) }}
+                        </div>
+                        <div class="mb-4">
+                            {{ form_label(form.email) }}
+                            {{ form_widget(form.email) }}
+                            {{ form_errors(form.email) }}
+                        </div>
+                        <div class="mb-4">
+                            {{ form_label(form.phone) }}
+                            {{ form_widget(form.phone) }}
+                            {{ form_errors(form.phone) }}
+                        </div>
+                        <div class="mb-4">
+                            {{ form_label(form.message) }}
+                            {{ form_widget(form.message) }}
+                            {{ form_errors(form.message) }}
+                        </div>
+                        <button type="submit" class="btn btn-ink">Trimite mesajul</button>
+                    {{ form_end(form) }}
+                </div>
+
+                <div class="col-lg-5 offset-lg-1">
+                    <div class="info-panel">
+                        <span class="eyebrow-badge mb-3"><span class="dot"></span><span>Alternativă</span></span>
+                        <p class="mt-3 mb-3" style="color: var(--stone);">
+                            Preferi să scrii direct, fără formular? Îmi poți trimite un email oricând la:
+                        </p>
+                        <a href="mailto:ionut_c1999@yahoo.com" class="font-display fs-3 d-inline-block link-contact">
+                            ionut_c1999@yahoo.com
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {% include 'partials/_footer.html.twig' %}
+
+</div>
+{% endblock %}

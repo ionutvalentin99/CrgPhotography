@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Galerie — Cîrceag Ionuț{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% include 'partials/_fonts.html.twig' %}
+{% endblock %}
+
+{% block body %}
+<div class="landing-page">
+
+    {% include 'partials/_navbar.html.twig' %}
+
+    <main class="section-space" style="padding-top: 7rem;">
+        <div class="container">
+            <span class="eyebrow-badge mb-3"><span class="dot"></span><span>Arhivă &amp; selecții</span></span>
+            <h1 class="font-display display-4 mt-3 mb-5">Galerie</h1>
+
+            {% include 'partials/_album_grid.html.twig' with { albums: albums } %}
+        </div>
+    </main>
+
+    {% include 'partials/_footer.html.twig' %}
+
+</div>
+{% endblock %}

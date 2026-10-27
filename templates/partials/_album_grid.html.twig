@@ -1,0 +1,31 @@
+{% if albums is empty %}
+    <p style="color: var(--stone);">Albumele vor fi publicate în curând.</p>
+{% else %}
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+        {% for album in albums %}
+            <div class="col">
+                <a href="{{ path('app_gallery_show', {id: album.id}) }}" class="album-card text-decoration-none">
+                    <div class="album-card-cover">
+                        {% if album.cover %}
+                            <img src="{{ asset(album.cover.path) }}" alt="{{ album.title }}" loading="lazy">
+                        {% endif %}
+                        <span class="album-card-count">{{ album.photos|length }} poze</span>
+                        <div class="album-card-overlay">
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size:16px;">visibility</span>
+                                Deschide albumul
+                            </span>
+                        </div>
+                    </div>
+                    <div class="album-card-body">
+                        <div>
+                            <h3 class="font-display album-card-title">{{ album.title }}</h3>
+                            <span class="album-card-meta">{{ album.photos|length }} poze</span>
+                        </div>
+                        <span class="album-card-year">{{ album.createdAt|date('Y') }}</span>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}

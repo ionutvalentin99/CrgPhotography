@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ album.title }} — Cîrceag Ionuț{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% include 'partials/_fonts.html.twig' %}
+{% endblock %}
+
+{% block body %}
+<div class="landing-page">
+
+    {% include 'partials/_navbar.html.twig' %}
+
+    <main class="section-space" style="padding-top: 7rem;">
+        <div class="container">
+            <a href="{{ path('app_gallery') }}" class="link-contact-secondary d-inline-flex align-items-center gap-1 mb-4">
+                <span class="material-symbols-outlined" style="font-size:16px;">arrow_back</span>
+                Toate albumele
+            </a>
+
+            <h1 class="font-display display-4 mb-2">{{ album.title }}</h1>
+            <span class="album-card-meta mb-5 d-block">{{ photos|length }} poze &middot; {{ album.createdAt|date('Y') }}</span>
+            {% if album.description %}
+                <p class="mb-5" style="max-width: 60ch; color: var(--stone);">{{ album.description }}</p>
+            {% endif %}
+
+            {% if photos is empty %}
+                <p style="color: var(--stone);">Pozele acestui album vor fi publicate în curând.</p>
+            {% else %}
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+                    {% for photo in photos %}
+                        <div class="col">
+                            <div class="album-card-cover" style="aspect-ratio: 4/5; border-radius: 0.25rem;">
+                                <img src="{{ asset(photo.path) }}" alt="{{ photo.title ?? album.title }}" loading="lazy">
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </main>
+
+    {% include 'partials/_footer.html.twig' %}
+
+</div>
+{% endblock %}

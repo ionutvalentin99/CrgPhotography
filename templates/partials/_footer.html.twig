@@ -1,0 +1,31 @@
+<footer class="landing-footer pt-5 pb-4" style="background-color: var(--panel); border-top: 1px solid var(--sand);">
+    <div class="container">
+        <div class="row gy-4 pb-4">
+            <div class="col-md-4">
+                <span class="font-display fs-4 d-block mb-2">Cîrceag Ionuț</span>
+                <p class="mb-0" style="color: var(--stone); max-width: 32ch;">
+                    Fotografie de portret — individual, cuplu sau corporate.
+                </p>
+            </div>
+            <div class="col-md-4">
+                <span class="d-block mb-3" style="font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color: var(--stone);">Navigare</span>
+                <div class="d-flex flex-column gap-2">
+                    <a href="{{ path('app_home') }}">Home</a>
+                    <a href="{{ path('app_gallery') }}">Galerie</a>
+                    <a href="{{ path('app_contact') }}">Contact</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <span class="d-block mb-3" style="font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color: var(--stone);">Contact</span>
+                <div class="d-flex flex-column gap-2">
+                    <a href="mailto:ionut_c1999@yahoo.com">ionut_c1999@yahoo.com</a>
+                    <a href="tel:+40700000000">+40 700 000 000</a>
+                </div>
+            </div>
+        </div>
+        <div class="pt-4 d-flex flex-column flex-sm-row align-items-center justify-content-between gap-2"
+             style="border-top: 1px solid var(--sand); font-size: .78rem; color: var(--stone);">
+            <span>&copy; {{ "now"|date("Y") }} Cîrceag Ionuț</span>
+        </div>
+    </div>
+</footer>

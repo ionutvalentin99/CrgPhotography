@@ -15,4 +15,29 @@ class AlbumRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Album::class);
     }
+
+    /**
+     * @return Album[]
+     */
+    public function findLatestVisible(int $limit = 9): array
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.visible = true')
+            ->orderBy('a.createdAt', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Album[]
+     */
+    public function findAllVisible(): array
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.visible = true')
+            ->orderBy('a.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }
