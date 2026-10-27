@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% include 'partials/_fonts.html.twig' %}
+{% endblock %}
+
+{% block body %}
+<div class="landing-page">
+    {% include 'partials/_navbar.html.twig' %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include 'partials/_footer.html.twig' %}
+</div>
+{% endblock %}

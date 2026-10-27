@@ -1,24 +1,15 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout/public.html.twig' %}
 
 {% block title %}Contact — Cîrceag Ionuț{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {% include 'partials/_fonts.html.twig' %}
-{% endblock %}
-
-{% block body %}
-<div class="landing-page">
-
-    {% include 'partials/_navbar.html.twig' %}
-
-    <main class="section-space" style="padding-top: 7rem;">
+{% block content %}
+    <div class="section-space page-offset">
         <div class="container">
             <div class="row gy-5">
                 <div class="col-lg-6">
                     <span class="eyebrow-badge mb-3"><span class="dot"></span><span>Hai să vorbim</span></span>
                     <h1 class="font-display display-4 mt-3 mb-4">Contact</h1>
-                    <p class="mb-5" style="max-width: 48ch; color: var(--stone);">
+                    <p class="mb-5 measure text-body-secondary">
                         Spune-mi câteva cuvinte despre ședința pe care o ai în minte și revin cu un răspuns
                         cât mai curând.
                     </p>
@@ -62,7 +53,7 @@
                 <div class="col-lg-5 offset-lg-1">
                     <div class="info-panel">
                         <span class="eyebrow-badge mb-3"><span class="dot"></span><span>Alternativă</span></span>
-                        <p class="mt-3 mb-3" style="color: var(--stone);">
+                        <p class="mt-3 mb-3 text-body-secondary">
                             Preferi să scrii direct, fără formular? Îmi poți trimite un email oricând la:
                         </p>
                         <a href="mailto:ionut_c1999@yahoo.com" class="font-display fs-3 d-inline-block link-contact">
@@ -72,9 +63,5 @@
                 </div>
             </div>
         </div>
-    </main>
-
-    {% include 'partials/_footer.html.twig' %}
-
-</div>
+    </div>
 {% endblock %}

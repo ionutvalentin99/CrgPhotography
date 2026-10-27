@@ -1,18 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout/public.html.twig' %}
 
 {% block title %}Cîrceag Ionuț — Fotografie de portret{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {% include 'partials/_fonts.html.twig' %}
-{% endblock %}
-
-{% block body %}
-<div class="landing-page">
-
-    {% include 'partials/_navbar.html.twig' %}
-
-    <section id="home" class="section-space" style="padding-top: 7rem;">
+{% block content %}
+    <section id="home" class="section-space page-offset">
         <div class="container">
             <div class="row align-items-end gy-4 mb-5 hero-enter">
                 <div class="col-lg-8">
@@ -23,22 +14,20 @@
                     <h1 class="font-display display-3 mb-0">Portrete de neuitat.</h1>
                 </div>
                 <div class="col-lg-4">
-                    <p class="mb-0" style="color: var(--stone);">
+                    <p class="mb-0 text-body-secondary">
                         Cîrceag Ionuț — fotografie de portret. Fiecare ședință e gândită în jurul tău: individual,
                         cuplu sau corporate, cu lumină naturală și compoziție atentă.
                     </p>
                 </div>
             </div>
 
-            <div class="row gy-3 mb-4 hero-enter" style="animation-delay:.1s">
-                <div class="col-12 d-flex flex-wrap gap-3">
-                    <a href="{{ path('app_gallery') }}" class="btn btn-ink">Explorează galeria</a>
-                    <a href="{{ path('app_contact') }}" class="btn btn-outline-ink">Discută proiectul</a>
-                </div>
+            <div class="d-flex flex-wrap gap-3 mb-4 hero-enter hero-enter-delay-1">
+                <a href="{{ path('app_gallery') }}" class="btn btn-ink">Explorează galeria</a>
+                <a href="{{ path('app_contact') }}" class="btn btn-outline-ink">Discută proiectul</a>
             </div>
 
-            <div class="hero-enter" style="animation-delay:.2s">
-                <div class="hero-visual" style="aspect-ratio: 21 / 9;">
+            <div class="hero-enter hero-enter-delay-2">
+                <div class="hero-visual hero-visual-wide">
                     <div class="hero-caption">
                         <div class="meta">
                             <span>Arhivă foto</span>
@@ -52,15 +41,15 @@
         </div>
     </section>
 
-    <section class="section-space" style="background-color: var(--panel);">
+    <section class="section-space bg-panel">
         <div class="container">
             <div class="row align-items-center gy-5">
                 <div class="col-lg-5">
                     <span class="eyebrow-badge mb-3"><span class="dot"></span><span>Despre mine</span></span>
-                    <blockquote class="font-display fs-2 fst-italic mt-3 mb-4" style="line-height: 1.3;">
+                    <blockquote class="font-display fs-2 fst-italic pull-quote mt-3 mb-4">
                         „Lumina spune povestea, eu doar apăs declanșatorul.”
                     </blockquote>
-                    <p class="mb-0" style="color: var(--stone);">
+                    <p class="mb-0 text-body-secondary">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
                         incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
                         exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -70,9 +59,9 @@
                     <div class="row row-cols-1 row-cols-sm-2 g-4">
                         <div class="col">
                             <div class="info-panel">
-                                <span class="material-symbols-outlined mb-3" style="font-size: 28px; color: var(--ink);">wb_sunny</span>
+                                <span class="material-symbols-outlined icon-lg mb-3">wb_sunny</span>
                                 <h3 class="font-display fs-4 mb-2">Lumină naturală</h3>
-                                <p class="mb-0" style="color: var(--stone);">
+                                <p class="mb-0 text-body-secondary">
                                     Fiecare ședință se bazează pe lumina disponibilă — răsărit, amurg sau
                                     penumbră de interior — pentru o atmosferă naturală.
                                 </p>
@@ -80,9 +69,9 @@
                         </div>
                         <div class="col">
                             <div class="info-panel">
-                                <span class="material-symbols-outlined mb-3" style="font-size: 28px; color: var(--ink);">photo_camera</span>
+                                <span class="material-symbols-outlined icon-lg mb-3">photo_camera</span>
                                 <h3 class="font-display fs-4 mb-2">Doar portrete</h3>
-                                <p class="mb-0" style="color: var(--stone);">
+                                <p class="mb-0 text-body-secondary">
                                     Individual, cuplu sau corporate — fără nunți sau evenimente, ca să am
                                     timp dedicat fiecărei ședințe.
                                 </p>
@@ -101,7 +90,7 @@
                     <span class="eyebrow-badge mb-2"><span class="dot"></span><span>Arhivă &amp; selecții</span></span>
                     <h2 class="font-display display-6 mt-3 mb-0">Albume recente</h2>
                 </div>
-                {% if albums|length > 0 %}
+                {% if albums is not empty %}
                     <a href="{{ path('app_gallery') }}" class="link-contact">Vezi toată galeria</a>
                 {% endif %}
             </div>
@@ -110,28 +99,22 @@
         </div>
     </section>
 
-    <section class="pb-6" style="padding-bottom: 6rem;">
+    <section class="section-space-bottom">
         <div class="container">
             <div class="cta-band">
-                <div class="position-relative" style="z-index:1; max-width: 640px;">
-                    <span class="eyebrow-badge mb-3" style="background-color: rgba(var(--alabaster-rgb),.1); color: var(--sand);">
-                        <span class="dot" style="background-color: var(--sand);"></span>
+                <div class="cta-band-content">
+                    <span class="eyebrow-badge eyebrow-badge-inverse mb-3">
+                        <span class="dot"></span>
                         <span>Disponibil pentru ședințe</span>
                     </span>
                     <h2 class="font-display display-5 mt-3 mb-3">Ai o poveste de spus?</h2>
-                    <p class="mb-4" style="color: var(--sand);">
+                    <p class="mb-4">
                         Scrie-mi câteva cuvinte despre ședința pe care o ai în minte și revin cu un răspuns
                         cât mai curând.
                     </p>
-                    <a href="{{ path('app_contact') }}" class="btn" style="background-color: var(--alabaster); color: var(--ink); border-radius:.25rem; padding:.8rem 1.9rem; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; font-weight:600;">
-                        Programează o ședință
-                    </a>
+                    <a href="{{ path('app_contact') }}" class="btn btn-paper">Programează o ședință</a>
                 </div>
             </div>
         </div>
     </section>
-
-    {% include 'partials/_footer.html.twig' %}
-
-</div>
 {% endblock %}

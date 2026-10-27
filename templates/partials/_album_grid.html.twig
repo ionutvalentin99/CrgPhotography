@@ -1,5 +1,5 @@
 {% if albums is empty %}
-    <p style="color: var(--stone);">Albumele vor fi publicate în curând.</p>
+    <p class="text-body-secondary">Albumele vor fi publicate în curând.</p>
 {% else %}
     <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
         {% for summary in albums %}
@@ -13,7 +13,7 @@
                         <span class="album-card-count">{{ summary.photoCount }} poze</span>
                         <div class="album-card-overlay">
                             <span>
-                                <span class="material-symbols-outlined" style="font-size:16px;">visibility</span>
+                                <span class="material-symbols-outlined icon-sm">visibility</span>
                                 Deschide albumul
                             </span>
                         </div>

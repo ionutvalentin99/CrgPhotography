@@ -134,6 +134,15 @@ html {
     50% { opacity: 0.35; }
 }
 
+.eyebrow-badge-inverse {
+    background-color: rgba(var(--alabaster-rgb), 0.1);
+    color: var(--sand);
+}
+
+.eyebrow-badge-inverse .dot {
+    background-color: var(--sand);
+}
+
 @media (prefers-reduced-motion: reduce) {
     .eyebrow-badge .dot {
         animation: none;
@@ -157,6 +166,14 @@ html {
     }
 }
 
+.hero-enter-delay-1 {
+    animation-delay: 0.1s;
+}
+
+.hero-enter-delay-2 {
+    animation-delay: 0.2s;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .hero-enter {
         animation: none;
@@ -169,6 +186,10 @@ html {
     overflow: hidden;
     border-radius: 0.25rem;
     background: linear-gradient(150deg, #F5F5F7 0%, #E8E8EA 55%, #D2D2D7 100%);
+}
+
+.hero-visual-wide {
+    aspect-ratio: 21 / 9;
 }
 
 .hero-visual::after {
@@ -234,7 +255,8 @@ html {
 /* Buttons */
 
 .landing-page .btn-ink,
-.landing-page .btn-outline-ink {
+.landing-page .btn-outline-ink,
+.landing-page .btn-paper {
     border-radius: 0.25rem;
     padding: 0.8rem 1.9rem;
     font-size: 0.75rem;
@@ -262,6 +284,20 @@ html {
     color: var(--ink);
 }
 
+/* Light button for dark backgrounds (CTA band). */
+.btn-paper {
+    background-color: var(--alabaster);
+    color: var(--ink);
+    border: 1px solid var(--alabaster);
+}
+
+.btn-paper:hover,
+.btn-paper:focus {
+    background-color: var(--sand);
+    border-color: var(--sand);
+    color: var(--ink);
+}
+
 .btn-outline-ink {
     background-color: transparent;
     color: var(--ink);
@@ -279,6 +315,45 @@ html {
 .section-space {
     padding-top: 6rem;
     padding-bottom: 6rem;
+}
+
+.section-space-bottom {
+    padding-bottom: 6rem;
+}
+
+/* Clears the fixed navbar on pages that start straight with content. */
+.page-offset {
+    padding-top: 7rem;
+}
+
+.bg-panel {
+    background-color: var(--panel);
+}
+
+/* Readable line lengths for running text. */
+.measure-sm {
+    max-width: 32ch;
+}
+
+.measure {
+    max-width: 48ch;
+}
+
+.measure-lg {
+    max-width: 60ch;
+}
+
+.pull-quote {
+    line-height: 1.3;
+}
+
+.icon-sm {
+    font-size: 16px;
+}
+
+.icon-lg {
+    font-size: 28px;
+    color: var(--ink);
 }
 
 /* Gallery / album cards */
@@ -401,6 +476,16 @@ html {
     overflow: hidden;
 }
 
+.cta-band-content {
+    position: relative;
+    z-index: 1;
+    max-width: 640px;
+}
+
+.cta-band-content p {
+    color: var(--sand);
+}
+
 .cta-band::after {
     content: "";
     position: absolute;
@@ -469,6 +554,26 @@ html {
 
 /* Footer */
 
+.landing-footer {
+    background-color: var(--panel);
+    border-top: 1px solid var(--sand);
+}
+
+.footer-label {
+    display: block;
+    margin-bottom: 1rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--stone);
+}
+
+.footer-bottom {
+    border-top: 1px solid var(--sand);
+    font-size: 0.78rem;
+    color: var(--stone);
+}
+
 .landing-footer a {
     color: var(--stone);
     text-decoration: none;
@@ -477,4 +582,13 @@ html {
 
 .landing-footer a:hover {
     color: var(--ink);
+}
+
+/* =========================================================
+   Admin
+   ========================================================= */
+
+.message-cell {
+    max-width: 420px;
+    white-space: pre-wrap;
 }
