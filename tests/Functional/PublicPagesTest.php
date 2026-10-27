@@ -15,6 +15,15 @@ final class PublicPagesTest extends WebTestCase
 
         self::assertResponseIsSuccessful();
         self::assertSelectorExists('html[lang="ro"] meta[name="viewport"]');
+        self::assertSelectorNotExists('link[href*="fonts.googleapis.com"], link[href*="fonts.gstatic.com"]');
+    }
+
+    public function testIconsAreRenderedAsInlineSvg(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/');
+
+        self::assertCount(2, $crawler->filter('.info-panel svg.icon-lg'));
     }
 
     public static function publicUrls(): iterable

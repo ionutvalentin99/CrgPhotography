@@ -61,16 +61,6 @@ html {
     scroll-margin-top: 84px;
 }
 
-.landing-page .material-symbols-outlined {
-    font-family: 'Material Symbols Outlined';
-    font-weight: normal;
-    font-style: normal;
-    line-height: 1;
-    display: inline-block;
-    white-space: nowrap;
-    -webkit-font-smoothing: antialiased;
-}
-
 /* Navbar */
 
 .landing-navbar {
@@ -347,11 +337,14 @@ html {
     line-height: 1.3;
 }
 
+/* UX Icons render inline SVGs sized 1em, so font-size sets the icon size. */
 .icon-sm {
     font-size: 16px;
+    flex-shrink: 0;
 }
 
 .icon-lg {
+    display: block;
     font-size: 28px;
     color: var(--ink);
 }
@@ -397,7 +390,7 @@ html {
     opacity: 1;
 }
 
-.album-card-overlay span {
+.album-card-overlay > span {
     background-color: var(--alabaster);
     color: var(--ink);
     border-radius: 0.25rem;
