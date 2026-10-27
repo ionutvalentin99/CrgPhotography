@@ -1,0 +1,12 @@
+framework:
+    cache:
+        pools:
+            cache.contact_form_limiter:
+                adapter: cache.app
+
+    rate_limiter:
+        contact_form:
+            policy: sliding_window
+            limit: 5
+            interval: '1 hour'
+            cache_pool: cache.contact_form_limiter

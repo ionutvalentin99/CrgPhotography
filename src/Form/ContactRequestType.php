@@ -37,6 +37,13 @@ class ContactRequestType extends AbstractType
                     'rows' => 5,
                 ],
             ])
+            // Honeypot: hidden from people, filled in by most spam bots.
+            ->add('website', TextType::class, [
+                'mapped' => false,
+                'required' => false,
+                'label' => 'Website',
+                'attr' => ['autocomplete' => 'off', 'tabindex' => '-1'],
+            ])
         ;
     }
 
