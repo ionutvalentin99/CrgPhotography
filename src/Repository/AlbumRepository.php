@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Album;
+use App\Entity\Photo;
+use App\Model\AlbumSummary;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -17,27 +19,29 @@ class AlbumRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Album[]
+     * Visible albums, newest first, with their cover and visible-photo count loaded in a single query.
+     *
+     * @return AlbumSummary[]
      */
-    public function findLatestVisible(int $limit = 9): array
+    public function findVisibleSummaries(?int $limit = null): array
     {
-        return $this->createQueryBuilder('a')
+        $queryBuilder = $this->createQueryBuilder('a')
+            ->addSelect('cover')
+            ->leftJoin('a.cover', 'cover')
+            ->addSelect(sprintf(
+                '(SELECT COUNT(p.id) FROM %s p WHERE p.album = a AND p.visible = true) AS photoCount',
+                Photo::class,
+            ))
             ->andWhere('a.visible = true')
-            ->orderBy('a.createdAt', 'DESC')
-            ->setMaxResults($limit)
-            ->getQuery()
-            ->getResult();
-    }
+            ->orderBy('a.createdAt', 'DESC');
 
-    /**
-     * @return Album[]
-     */
-    public function findAllVisible(): array
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.visible = true')
-            ->orderBy('a.createdAt', 'DESC')
-            ->getQuery()
-            ->getResult();
+        if (null !== $limit) {
+            $queryBuilder->setMaxResults($limit);
+        }
+
+        return array_map(
+            static fn (array $row): AlbumSummary => new AlbumSummary($row[0], (int) $row['photoCount']),
+            $queryBuilder->getQuery()->getResult(),
+        );
     }
 }

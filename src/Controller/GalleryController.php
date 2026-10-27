@@ -14,7 +14,7 @@ final class GalleryController extends AbstractController
     public function index(AlbumRepository $albumRepository): Response
     {
         return $this->render('gallery/index.html.twig', [
-            'albums' => $albumRepository->findAllVisible(),
+            'albums' => $albumRepository->findVisibleSummaries(),
         ]);
     }
 

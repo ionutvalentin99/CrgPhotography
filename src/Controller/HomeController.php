@@ -13,7 +13,7 @@ class HomeController extends AbstractController
     public function index(AlbumRepository $albumRepository): Response
     {
         return $this->render('home/index.html.twig', [
-            'albums' => $albumRepository->findLatestVisible(9),
+            'albums' => $albumRepository->findVisibleSummaries(9),
         ]);
     }
 }
