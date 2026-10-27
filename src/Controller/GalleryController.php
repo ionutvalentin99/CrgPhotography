@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Album;
 use App\Repository\AlbumRepository;
+use App\Repository\PhotoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Requirement\Requirement;
 
 final class GalleryController extends AbstractController
 {
@@ -18,18 +20,16 @@ final class GalleryController extends AbstractController
         ]);
     }
 
-    #[Route('/gallery/{id}', name: 'app_gallery_show', requirements: ['id' => '\d+'])]
-    public function show(Album $album): Response
+    #[Route('/gallery/{id}', name: 'app_gallery_show', requirements: ['id' => Requirement::DIGITS])]
+    public function show(Album $album, PhotoRepository $photoRepository): Response
     {
         if (!$album->isVisible()) {
             throw $this->createNotFoundException();
         }
 
-        $photos = $album->getPhotos()->filter(fn ($photo) => $photo->isVisible());
-
         return $this->render('gallery/show.html.twig', [
             'album' => $album,
-            'photos' => $photos,
+            'photos' => $photoRepository->findVisibleByAlbum($album),
         ]);
     }
 }

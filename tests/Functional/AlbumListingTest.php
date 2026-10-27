@@ -2,6 +2,7 @@
 
 namespace App\Tests\Functional;
 
+use App\Entity\Photo;
 use App\Tests\Support\EntityFactoryTrait;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -76,6 +77,33 @@ final class AlbumListingTest extends WebTestCase
         $client->request('GET', '/gallery/'.$album->getId());
 
         self::assertResponseStatusCodeSame(404);
+    }
+
+    public function testAlbumPagePhotosFollowSortOrder(): void
+    {
+        $client = static::createClient();
+        $author = $this->createUser();
+        $album = $this->createAlbum($author, 'Ordine');
+
+        foreach ([2, 0, 1] as $sortOrder) {
+            $this->entityManager()->persist(
+                (new Photo())
+                    ->setAlbum($album)
+                    ->setPath(sprintf('uploads/order-%d.jpg', $sortOrder))
+                    ->setSortOrder($sortOrder)
+                    ->setVisible(true)
+                    ->setCreatedBy($author),
+            );
+        }
+        $this->entityManager()->flush();
+        $this->entityManager()->clear();
+
+        $crawler = $client->request('GET', '/gallery/'.$album->getId());
+
+        self::assertSame(
+            ['/uploads/order-0.jpg', '/uploads/order-1.jpg', '/uploads/order-2.jpg'],
+            $crawler->filter('main img')->each(static fn ($img) => $img->attr('src')),
+        );
     }
 
     public function testAlbumPageShowsOnlyVisiblePhotos(): void
